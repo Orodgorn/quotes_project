@@ -3,7 +3,6 @@ from django.http import JsonResponse
 from django.db.models import Sum, F
 from django.views.decorators.http import require_POST
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 import random
 
 from .models import Quote
@@ -29,10 +28,16 @@ def get_random_quote():
 
 
 def random_quote_view(request):
+    # Получаем ID последней просмотренной цитаты из сессии
+    last_viewed_quote_id = request.COOKIES.get('last_viewed_quote_id')
+
     quote = get_random_quote()
 
-    if quote:
+    # Увеличиваем счетчик просмотров только если это новая цитата
+    if quote and quote.id != last_viewed_quote_id:
         quote.increment_views()
+        # Сохраняем ID просмотренной цитаты в сессии
+        request.session['last_viewed_quote_id'] = quote.id
 
     if request.method == 'POST':
         form = QuoteForm(request.POST)
@@ -110,7 +115,6 @@ def popular_quotes_view(request):
 
 
 @require_POST
-@login_required
 def delete_quote(request, quote_id):
     quote = get_object_or_404(Quote, id=quote_id)
     quote.delete()
@@ -118,7 +122,6 @@ def delete_quote(request, quote_id):
     return redirect('manage_quotes')
 
 
-@login_required
 def manage_quotes_view(request):
     quotes = Quote.objects.all().order_by('-created_at')
     return render(request, 'quotes/manage_quotes.html', {'quotes': quotes})

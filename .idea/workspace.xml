@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32241224-d756-438a-84b2-fc64c0f111fc" name="Changes" comment="" />
+    <list default="true" id="32241224-d756-438a-84b2-fc64c0f111fc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/quotes/static/css/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/quotes_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/quotes_project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Changes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quotes/templates/quotes/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/templates/quotes/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quotes/templates/quotes/manage_quotes.html" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/templates/quotes/manage_quotes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quotes/templates/quotes/popular_quotes.html" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/templates/quotes/popular_quotes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quotes/templates/quotes/random_quote.html" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/templates/quotes/random_quote.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quotes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quotes_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/quotes_project/settings.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,23 +47,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/z/PycharmProjects/pythonProject&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
+    "last_opened_file_path": "C:/Users/z/PycharmProjects/pythonProject",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\z\PycharmProjects\quotes_project\quotes\templates\quotes" />
@@ -58,7 +73,6 @@
   <component name="RunManager">
     <configuration name="quotes_project" type="Python.DjangoServer" factoryName="Django server">
       <module name="quotes_project" />
-      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -97,6 +111,7 @@
       <option name="presentableId" value="Default" />
       <updated>1756260955485</updated>
       <workItem from="1756260969969" duration="17686000" />
+      <workItem from="1756291650323" duration="10292000" />
     </task>
     <servers />
   </component>

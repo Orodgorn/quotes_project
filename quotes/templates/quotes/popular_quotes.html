@@ -1,69 +1,419 @@
 {% extends 'quotes/index.html' %}
+{% load static %}
 
 {% block title %}Популярные цитаты{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h1>Популярные цитаты</h1>
-        
-        <ul class="nav nav-tabs mb-4">
-            <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#popular">По популярности</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#viewed">По просмотрам</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#recent">Новые</a>
-            </li>
-        </ul>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">
+                <i class="fas fa-fire me-3"></i>Популярные цитаты
+            </h1>
+            <a href="{% url 'random_quote' %}" class="btn btn-primary">
+                <i class="fas fa-home me-2"></i>На главную
+            </a>
+        </div>
 
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="popular">
+        <div class="card mb-4">
+            <div class="card-body">
+                <ul class="nav nav-pills nav-justified" id="popularTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="popular-tab" data-bs-toggle="pill"
+                                data-bs-target="#popular" type="button" role="tab">
+                            <i class="fas fa-trophy me-2"></i>По популярности
+                            <span class="badge bg-primary ms-2">{{ popular_quotes|length }}</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="viewed-tab" data-bs-toggle="pill"
+                                data-bs-target="#viewed" type="button" role="tab">
+                            <i class="fas fa-eye me-2"></i>По просмотрам
+                            <span class="badge bg-info ms-2">{{ most_viewed|length }}</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="recent-tab" data-bs-toggle="pill"
+                                data-bs-target="#recent" type="button" role="tab">
+                            <i class="fas fa-clock me-2"></i>Новые
+                            <span class="badge bg-success ms-2">{{ recent_quotes|length }}</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="popularTabsContent">
+            <!-- Популярные по рейтингу -->
+            <div class="tab-pane fade show active" id="popular" role="tabpanel">
                 {% for quote in popular_quotes %}
-                <div class="card mb-3">
+                <div class="card quote-card mb-4">
                     <div class="card-body">
-                        <p class="card-text">{{ quote.text }}</p>
-                        <p class="text-muted">
-                            {{ quote.source }} | 
-                            👍 {{ quote.likes }} | 👎 {{ quote.dislikes }} |
-                            Популярность: {{ quote.popularity_calc }} |
-                            Просмотров: {{ quote.views_count }}
-                        </p>
+                        <div class="quote-text">
+                            <i class="fas fa-quote-left text-muted me-2"></i>
+                            {{ quote.text }}
+                            <i class="fas fa-quote-right text-muted ms-2"></i>
+                        </div>
+
+                        <div class="quote-meta mt-3">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="quote-source">
+                                    <i class="fas fa-film me-1"></i>
+                                    <strong>{{ quote.source }}</strong>
+                                </div>
+
+                                <div class="quote-stats">
+                                    <span class="badge bg-success me-2">
+                                        <i class="fas fa-thumbs-up"></i> {{ quote.likes }}
+                                    </span>
+                                    <span class="badge bg-danger me-2">
+                                        <i class="fas fa-thumbs-down"></i> {{ quote.dislikes }}
+                                    </span>
+                                    <span class="badge bg-warning me-2">
+                                        <i class="fas fa-chart-line"></i> {{ quote.popularity_calc }}
+                                    </span>
+                                    <span class="badge bg-info">
+                                        <i class="fas fa-eye"></i> {{ quote.views_count }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {% if forloop.first %}
+                            <div class="text-center mt-3">
+                                <span class="badge bg-gold">
+                                    <i class="fas fa-crown me-1"></i>Самая популярная цитата
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5">
+                    <i class="fas fa-trophy fa-3x text-muted mb-3"></i>
+                    <h5>Пока нет популярных цитат</h5>
+                    <p class="text-muted">Цитаты появятся после оценок пользователей</p>
                 </div>
                 {% endfor %}
             </div>
 
-            <div class="tab-pane fade" id="viewed">
+            <!-- По просмотрам -->
+            <div class="tab-pane fade" id="viewed" role="tabpanel">
                 {% for quote in most_viewed %}
-                <div class="card mb-3">
+                <div class="card quote-card mb-4">
                     <div class="card-body">
-                        <p class="card-text">{{ quote.text }}</p>
-                        <p class="text-muted">
-                            {{ quote.source }} | 
-                            Просмотров: {{ quote.views_count }}
-                        </p>
+                        <div class="quote-text">
+                            <i class="fas fa-quote-left text-muted me-2"></i>
+                            {{ quote.text }}
+                            <i class="fas fa-quote-right text-muted ms-2"></i>
+                        </div>
+
+                        <div class="quote-meta mt-3">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="quote-source">
+                                    <i class="fas fa-film me-1"></i>
+                                    <strong>{{ quote.source }}</strong>
+                                </div>
+
+                                <div class="quote-stats">
+                                    <span class="badge bg-primary me-2">
+                                        <i class="fas fa-eye"></i> {{ quote.views_count }} просмотров
+                                    </span>
+                                    <span class="badge bg-success me-2">
+                                        <i class="fas fa-thumbs-up"></i> {{ quote.likes }}
+                                    </span>
+                                    <span class="badge bg-danger">
+                                        <i class="fas fa-thumbs-down"></i> {{ quote.dislikes }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {% if forloop.first %}
+                            <div class="text-center mt-3">
+                                <span class="badge bg-gold">
+                                    <i class="fas fa-star me-1"></i>Самая просматриваемая цитата
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5">
+                    <i class="fas fa-eye fa-3x text-muted mb-3"></i>
+                    <h5>Пока нет просмотров</h5>
+                    <p class="text-muted">Цитаты появятся после просмотров пользователями</p>
                 </div>
                 {% endfor %}
             </div>
 
-            <div class="tab-pane fade" id="recent">
+            <!-- Новые цитаты -->
+            <div class="tab-pane fade" id="recent" role="tabpanel">
                 {% for quote in recent_quotes %}
-                <div class="card mb-3">
+                <div class="card quote-card mb-4">
                     <div class="card-body">
-                        <p class="card-text">{{ quote.text }}</p>
-                        <p class="text-muted">
-                            {{ quote.source }} | 
-                            Добавлено: {{ quote.created_at|date:"d.m.Y" }}
-                        </p>
+                        <div class="quote-text">
+                            <i class="fas fa-quote-left text-muted me-2"></i>
+                            {{ quote.text }}
+                            <i class="fas fa-quote-right text-muted ms-2"></i>
+                        </div>
+
+                        <div class="quote-meta mt-3">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="quote-source">
+                                    <i class="fas fa-film me-1"></i>
+                                    <strong>{{ quote.source }}</strong>
+                                </div>
+
+                                <div class="quote-info">
+                                    <span class="badge bg-secondary me-2">
+                                        <i class="fas fa-calendar"></i> {{ quote.created_at|date:"d.m.Y" }}
+                                    </span>
+                                    <span class="badge bg-info me-2">
+                                        <i class="fas fa-clock"></i> {{ quote.created_at|date:"H:i" }}
+                                    </span>
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-history"></i> {{ quote.created_at|timesince }} назад
+                                    </span>
+                                </div>
+                            </div>
+
+                            {% if forloop.first %}
+                            <div class="text-center mt-3">
+                                <span class="badge bg-gold">
+                                    <i class="fas fa-bolt me-1"></i>Самая свежая цитата
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5">
+                    <i class="fas fa-clock fa-3x text-muted mb-3"></i>
+                    <h5>Пока нет цитат</h5>
+                    <p class="text-muted">Добавьте первую цитату на главной странице</p>
+                    <a href="{% url 'random_quote' %}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Добавить цитату
+                    </a>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 </div>
+
+<style>
+:root {
+    --bs-warning-rgb: 255, 193, 7;
+    --bs-primary-rgb: 13, 110, 253;
+    --bs-success-rgb: 25, 135, 84;
+    --bs-bg-opacity: 1;
+}
+
+.nav-pills .nav-link {
+    border-radius: 10px;
+    margin: 0 5px;
+    padding: 15px 20px;
+    transition: all 0.3s ease;
+    border: 2px solid #dee2e6 !important;
+    color: #2c3e50 !important;
+    background-color: #f8f9fa !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Рамка и фон для каждой кнопки */
+.nav-pills .nav-link#popular-tab {
+    border-color: rgba(var(--bs-warning-rgb), 0.5) !important;
+    background-color: rgba(var(--bs-warning-rgb), 0.1) !important;
+}
+
+.nav-pills .nav-link#viewed-tab {
+    border-color: rgba(var(--bs-primary-rgb), 0.5) !important;
+    background-color: rgba(var(--bs-primary-rgb), 0.1) !important;
+}
+
+.nav-pills .nav-link#recent-tab {
+    border-color: rgba(var(--bs-success-rgb), 0.5) !important;
+    background-color: rgba(var(--bs-success-rgb), 0.1) !important;
+}
+
+/* Бейджи с количеством для неактивных кнопок */
+.nav-pills .nav-link#popular-tab .badge {
+    background-color: rgba(var(--bs-warning-rgb), var(--bs-bg-opacity)) !important;
+    color: #000 !important;
+}
+
+.nav-pills .nav-link#viewed-tab .badge {
+    background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+    color: white !important;
+}
+
+.nav-pills .nav-link#recent-tab .badge {
+    background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
+    color: white !important;
+}
+
+/* Активное состояние */
+.nav-pills .nav-link.active {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: white !important;
+    border-width: 2px !important;
+}
+
+.nav-pills .nav-link.active#popular-tab {
+    background: linear-gradient(135deg,
+        rgba(var(--bs-warning-rgb), 1) 0%,
+        rgba(255, 153, 0, 1) 100%) !important;
+    border-color: rgba(var(--bs-warning-rgb), 1) !important;
+}
+
+.nav-pills .nav-link.active#viewed-tab {
+    background: linear-gradient(135deg,
+        rgba(var(--bs-primary-rgb), 1) 0%,
+        rgba(10, 88, 202, 1) 100%) !important;
+    border-color: rgba(var(--bs-primary-rgb), 1) !important;
+}
+
+.nav-pills .nav-link.active#recent-tab {
+    background: linear-gradient(135deg,
+        rgba(var(--bs-success-rgb), 1) 0%,
+        rgba(20, 108, 67, 1) 100%) !important;
+    border-color: rgba(var(--bs-success-rgb), 1) !important;
+}
+
+/* Бейджи с количеством для активных кнопок */
+.nav-pills .nav-link.active#popular-tab .badge {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    color: #000 !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.nav-pills .nav-link.active#viewed-tab .badge {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.nav-pills .nav-link.active#recent-tab .badge {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Состояние при наведении */
+.nav-pills .nav-link:not(.active):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-pills .nav-link#popular-tab:not(.active):hover {
+    border-color: rgba(var(--bs-warning-rgb), 0.8) !important;
+    background-color: rgba(var(--bs-warning-rgb), 0.2) !important;
+    color: rgb(var(--bs-warning-rgb)) !important;
+}
+
+.nav-pills .nav-link#viewed-tab:not(.active):hover {
+    border-color: rgba(var(--bs-primary-rgb), 0.8) !important;
+    background-color: rgba(var(--bs-primary-rgb), 0.2) !important;
+    color: rgb(var(--bs-primary-rgb)) !important;
+}
+
+.nav-pills .nav-link#recent-tab:not(.active):hover {
+    border-color: rgba(var(--bs-success-rgb), 0.8) !important;
+    background-color: rgba(var(--bs-success-rgb), 0.2) !important;
+    color: rgb(var(--bs-success-rgb)) !important;
+}
+
+/* Стили для иконок */
+.nav-pills .nav-link i {
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link.active i {
+    transform: scale(1.2);
+}
+
+.badge.bg-gold {
+    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
+    color: #000 !important;
+    font-weight: bold;
+    padding: 8px 15px;
+}
+
+.quote-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.quote-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.quote-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #2c3e50;
+    font-style: italic;
+    padding: 1rem;
+}
+
+.quote-meta {
+    padding: 0 1rem;
+}
+
+.quote-stats .badge, .quote-info .badge {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .nav-pills .nav-link {
+        margin: 5px 0;
+        text-align: center;
+        padding: 12px 15px;
+    }
+
+    .quote-stats, .quote-info {
+        margin-top: 1rem;
+    }
+
+    .quote-stats .badge, .quote-info .badge {
+        display: block;
+        margin: 0.2rem;
+    }
+
+}
+</style>
+
+<script>
+// Сохранение активной вкладки при обновлении страницы
+document.addEventListener('DOMContentLoaded', function() {
+    const activeTab = localStorage.getItem('activePopularTab');
+    if (activeTab) {
+        const tab = new bootstrap.Tab(document.getElementById(activeTab + '-tab'));
+        tab.show();
+    }
+
+    const tabEls = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabEls.forEach(tabEl => {
+        tabEl.addEventListener('shown.bs.tab', function (event) {
+            const activeTab = event.target.id.replace('-tab', '');
+            localStorage.setItem('activePopularTab', activeTab);
+        });
+    });
+});
+</script>
 {% endblock %}
