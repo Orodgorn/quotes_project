@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32241224-d756-438a-84b2-fc64c0f111fc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/quotes/static/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/quotes_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/quotes_project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Changes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quotes/templates/quotes/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/templates/quotes/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quotes/templates/quotes/manage_quotes.html" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/templates/quotes/manage_quotes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quotes/templates/quotes/popular_quotes.html" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/templates/quotes/popular_quotes.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quotes/templates/quotes/random_quote.html" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/templates/quotes/random_quote.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quotes/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/quotes/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quotes_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/quotes_project/settings.py" afterDir="false" />
-    </list>
+    <list default="true" id="32241224-d756-438a-84b2-fc64c0f111fc" name="Changes" comment="update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,11 +97,23 @@
       <option name="presentableId" value="Default" />
       <updated>1756260955485</updated>
       <workItem from="1756260969969" duration="17686000" />
-      <workItem from="1756291650323" duration="10292000" />
+      <workItem from="1756291650323" duration="10496000" />
     </task>
+    <task id="LOCAL-00001" summary="update">
+      <created>1756303621083</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1756303621083</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>

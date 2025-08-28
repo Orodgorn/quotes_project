@@ -35,7 +35,6 @@ class Quote(models.Model):
     likes = models.PositiveIntegerField(default=0, verbose_name="Лайки")
     dislikes = models.PositiveIntegerField(default=0, verbose_name="Дизлайки")
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "Цитата"
@@ -43,7 +42,7 @@ class Quote(models.Model):
         unique_together = ['text', 'source']
 
     def __str__(self):
-        return f"{self.text[:50]}... ({self.source})"
+        return f"{self.text}({self.source})"
 
     def save(self, *args, **kwargs):
         self.clean()
