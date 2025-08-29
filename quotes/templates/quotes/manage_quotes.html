@@ -1,56 +1,226 @@
 {% extends 'quotes/index.html' %}
+{% load static %}
+
+{% block title %}Управление цитатами{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h1>Управление цитатами</h1>
-        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">
+                <i class="fas fa-cog me-3"></i>Управление цитатами
+            </h1>
+            <a href="{% url 'random_quote' %}" class="btn btn-primary">
+                <i class="fas fa-home me-2"></i>На главную
+            </a>
+        </div>
+
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% if message.tags == 'success' %}
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <i class="fas fa-check-circle me-2"></i>{{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% elif message.tags == 'error' %}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <i class="fas fa-exclamation-circle me-2"></i>{{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% else %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                        <i class="fas fa-info-circle me-2"></i>{{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endif %}
             {% endfor %}
         {% endif %}
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Цитата</th>
-                    <th>Источник</th>
-                    <th>Просмотры</th>
-                    <th>Лайки</th>
-                    <th>Дизлайки</th>
-                    <th>Дата создания</th>
-                    <th>Действия</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for quote in quotes %}
-                <tr>
-                    <td>{{ quote.text|truncatewords:10 }}</td>
-                    <td>{{ quote.source }}</td>
-                    <td>{{ quote.views_count }}</td>
-                    <td>{{ quote.likes }}</td>
-                    <td>{{ quote.dislikes }}</td>
-                    <td>{{ quote.created_at|date:"d.m.Y H:i" }}</td>
-                    <td>
-                        <form method="post" action="{% url 'delete_quote' quote.id %}" style="display: inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm" 
-                                    onclick="return confirm('Удалить эту цитату?')">
-                                Удалить
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="7" class="text-center">Нет цитат</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    Список цитат ({{ quotes.count }})
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><i class="fas fa-quote-left me-1"></i> Цитата</th>
+                                <th><i class="fas fa-film me-1"></i> Источник</th>
+                                <th><i class="fas fa-eye me-1"></i> Просмотры</th>
+                                <th><i class="fas fa-thumbs-up me-1"></i> Лайки</th>
+                                <th><i class="fas fa-thumbs-down me-1"></i> Дизлайки</th>
+                                <th><i class="fas fa-calendar me-1"></i> Дата создания</th>
+                                <th><i class="fas fa-actions me-1"></i> Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for quote in quotes %}
+                            <tr class="align-middle">
+                                <td>
+                                    <div class="quote-preview" data-bs-toggle="tooltip" title="{{ quote.text }}">
+                                        {{ quote.text|truncatewords:8 }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ quote.source }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">{{ quote.views_count }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success">{{ quote.likes }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-danger">{{ quote.dislikes }}</span>
+                                </td>
+                                <td>
+                                    <small class="text-muted">{{ quote.created_at|date:"d.m.Y H:i" }}</small>
+                                </td>
+                                <td>
+                                    <form method="post" action="{% url 'delete_quote' quote.id %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Вы уверены, что хотите удалить эту цитату?\n\n\"{{ quote.text|truncatewords:10 }}\"')">
+                                            <i class="fas fa-trash me-1"></i> Удалить
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-inbox fa-3x mb-3"></i>
+                                        <h5>Нет цитат</h5>
+                                        <p>Добавьте первую цитату на главной странице</p>
+                                        <a href="{% url 'random_quote' %}" class="btn btn-primary">
+                                            <i class="fas fa-plus me-2"></i>Добавить цитату
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        <a href="{% url 'random_quote' %}" class="btn btn-primary">На главную</a>
+        {% if quotes.has_other_pages %}
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if quotes.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ quotes.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                {% for i in quotes.paginator.page_range %}
+                <li class="page-item {% if quotes.number == i %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endfor %}
+
+                {% if quotes.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ quotes.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
     </div>
 </div>
+
+<style>
+.table th {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    font-weight: 600;
+    border: none;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+.quote-preview {
+    cursor: pointer;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.badge {
+    font-size: 0.85em;
+    padding: 0.5em 0.75em;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    background: linear-gradient(135deg, #2c3e50, #34495e) !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.page-item.active .page-link {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-color: #667eea;
+}
+
+.page-link {
+    border-radius: 8px;
+    margin: 0 2px;
+    border: none;
+    color: #2c3e50;
+}
+
+.page-link:hover {
+    background-color: #667eea;
+    color: white;
+}
+</style>
+
+<script>
+// Активация tooltip'ов
+document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+});
+
+// Подтверждение удаления с улучшенным диалогом
+function confirmDelete(event) {
+    const quoteText = event.target.closest('tr').querySelector('.quote-preview').getAttribute('title');
+    return confirm(`Вы уверены, что хотите удалить эту цитату?\n\n"${quoteText}"\n\nЭто действие нельзя отменить.`);
+}
+</script>
 {% endblock %}
